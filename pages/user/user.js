@@ -86,59 +86,6 @@ Page({
       complete: ()=>{}
     });
   },
-  //跳转到用户预览页面
-  goToPreview: function(){
-    let that = this;
-    let user = that.data.user;
-    user.honors = that.data.honors;
-    user.medals = that.data.medals;
-    wx.navigateTo({
-      url: 'userPage/userPage',
-      success: (res)=>{
-        res.eventChannel.emit('getDataFromUserPage', user)
-      },
-      fail: ()=>{},
-      complete: ()=>{}
-    });
-  },
-  //跳转到消息页面：系统消息
-  goToSystemMessage: function(){
-    let user = wx.getStorageSync('user');
-    if(user){
-        if(user.constructor != Object) user = JSON.parse(user);
-        wx.navigateTo({
-            url: '/pages/moments/messages/messages?rid='+user.rid+'&type=userCenter',
-            fail: (err)=>{
-              console.log(err)
-            },
-            complete: ()=>{}
-        });
-    }
-  },
-
-  //跳转到我的动态页面
-  goToMyMoments: function(){
-    let user = app.getUser();
-    wx.navigateTo({
-      url: 'myMoments/myMoments',
-      success: (res)=>{
-        res.eventChannel.emit('getDataFromUserPage', user)
-      },
-      fail: ()=>{},
-      complete: ()=>{}
-    });
-  },
-  
-  //跳转到我的运动页面
-  goToMyRuns: function(){
-    let user = app.getUser();
-    wx.navigateTo({
-      url: 'myRuns/myRuns?rid='+user.rid,
-      success: (res)=>{},
-      fail: ()=>{},
-      complete: ()=>{}
-    });
-  },
 
   //从服务器获取：判断是否注册、本地缓存
   getUserData: function(){
@@ -198,7 +145,7 @@ Page({
           sex: e.detail.userInfo.gender,  //性别
           img: e.detail.userInfo.avatarUrl  //头像
         };
-        //跑鸭注册
+        //注册
         wx.request({
           url: app.config.getHostUrl()+'/api/main/wxAuth',
           method: 'post',
@@ -245,23 +192,6 @@ Page({
     if (data) {
       this.setData({ user: data });
     }
-  },
-
-  // 获取已获称号
-  getHonors: function(rid){
-    let that = this;
-    let user = that.data.user;
-    wx.request({
-      url: app.config.getHostUrl()+'/api/user/getHonor',
-      method: 'post',
-      data: { rid },
-      success: (res) => {
-        if(res.data.isSuccess){
-          user.honors = res.data.data instanceof Array ? res.data.data : [res.data.data];
-          that.setData({ user });
-        }
-      }
-    })
   },
 
   // 获取已获勋章

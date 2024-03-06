@@ -39,31 +39,18 @@
                                 <van-radio name="0">保密</van-radio>
                             </van-col>
                             <van-col span="8">
-                                <van-radio name="1">汉子</van-radio>
+                                <van-radio name="1">男生</van-radio>
                             </van-col>
                             <van-col span="8">
-                                <van-radio name="2">妹子</van-radio>
+                                <van-radio name="2">女生</van-radio>
                             </van-col>
                         </van-row>
                     </van-radio-group>
                 </van-cell>
                 <van-field
-                    value="{{ user.team }}"
-                    label="校区"
-                    placeholder="请输入校区"
-                    type="text"
-                    data-who="team"
-                    bind:change="onFieldChange"
-                    bind:confirm="onFieldConfirm"
-                    border="{{ false }}"
-                    error="{{ false }}"
-                >
-                    <van-button slot="button" round size="small" type="info" bind:click="showPicker">选择已有校区</van-button>
-                </van-field>
-                <van-field
                     value="{{ user.job }}"
-                    label="职业"
-                    placeholder="请输入职业"
+                    label="学号"
+                    placeholder="绑定你的学号"
                     type="text"
                     data-who="job"
                     bind:change="onFieldChange"

@@ -44,8 +44,6 @@ Page({
         })
         // this.getUser(10);
         cropper = this.selectComponent("#image-cropper");
-        // 获取校区
-        this.getSchools();
     },
 
     
@@ -65,29 +63,6 @@ Page({
                 }
             }
         })
-    },
-
-    // 获取校区
-    getSchools() {
-        let that = this;
-        wx.request({
-            url: app.config.getHostUrl() + '/api/user/getSchools',
-            method: 'GET',
-            success: (res)=>{
-                if(res.data.isSuccess){
-                    let schools = [];
-                    let pickerindex = 0;
-                    let user = that.data.user;
-                    if(res.data.data.length != 0){
-                        res.data.data.forEach((item, index)=>{
-                            schools.push(item.team);
-                            if(user.team == item.team) pickerindex = index;
-                        })
-                    }
-                    that.setData({ schools, pickerindex });
-                }
-            },
-        });
     },
     
     /**
@@ -245,18 +220,6 @@ Page({
         let user = this.data.user;
         user[e.currentTarget.dataset.who] = e.detail;
         this.setData({ user });
-    },
-
-    //单选框
-    onChange(event) {
-        let user = this.data.user;
-        user.sex = event.detail;
-        this.setData({ user });
-    },
-
-    // 选择校区
-    showPicker() {
-        this.setData({ isShowPicker: true })
     },
     // pickerChange(e) {
     //     let user = this.data.user;

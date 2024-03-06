@@ -1,23 +1,15 @@
 {
     "pages": [
-        "pages/run/run",
-        "pages/moments/moments",
         "pages/pub/pub",
         "pages/user/user",
-        "pages/moments/newMoment/newMoment",
         "pages/user/setting/setting",
         "pages/user/edit/edit",
         "pages/user/privacy/privacy",
-        "pages/user/userPage/userPage",
         "pages/pub/listMore/listmore",
         "pages/pub/blockMore/blockmore",
         "pages/pub/listDetail/listDetail",
         "pages/pub/blockDetail/blockDetail",
-        "pages/user/modals/modals",
-        "pages/user/myMoments/myMoments",
-        "pages/moments/messages/messages",
-        "pages/user/myRuns/myRuns",
-        "pages/run/sharePage/sharePage"
+        "pages/user/modals/modals"
     ],
     "permission": {
         "scope.userLocation": {
@@ -30,44 +22,31 @@
         "startLocationUpdate"
     ],
     "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#63b7af",
-        "navigationBarTitleText": "跑鸭",
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#94070A",
+        "navigationBarTitleText": "PkR",
         "navigationBarTextStyle": "white",
         "onReachBottomDistance": 65
     },
     "tabBar": {
-        "backgroundColor": "#63b7af",
+        "backgroundColor": "#fff",
         "color": "#000",
-        "selectedColor": "#fff",
+        "selectedColor": "#94070A",
         "list": [
             {
-                "pagePath": "pages/run/run",
-                "text": "跑鸭",
-                "iconPath": "imgs/tabbar/run.png",
-                "selectedIconPath": "/imgs/tabbar/run-w.png"
-            },
-            {
-                "pagePath": "pages/moments/moments",
-                "text": "动态",
-                "iconPath": "imgs/tabbar/moments.png",
-                "selectedIconPath": "/imgs/tabbar/moments-w.png"
-            },
-            {
                 "pagePath": "pages/pub/pub",
-                "text": "广场",
-                "iconPath": "imgs/tabbar/pub.png",
-                "selectedIconPath": "/imgs/tabbar/pub-w.png"
+                "text": "夜奔",
+                "iconPath": "imgs/tabbar/run.png",
+                "selectedIconPath": "/imgs/tabbar/run-r.png"
             },
             {
                 "pagePath": "pages/user/user",
                 "text": "个人",
                 "iconPath": "imgs/tabbar/user.png",
-                "selectedIconPath": "/imgs/tabbar/user-w.png"
+                "selectedIconPath": "/imgs/tabbar/user-r.png"
             }
         ]
     },
-    "sitemapLocation": "sitemap.json",
     "usingComponents": {
         "van-rate": "@vant/weapp/rate/index",
         "van-button": "@vant/weapp/button/index",
@@ -79,11 +58,5 @@
         "van-col": "@vant/weapp/col/index",
         "van-icon": "@vant/weapp/icon/index",
         "van-image": "@vant/weapp/image/index"
-    },
-    "plugins": {
-        "chooseLocation": {
-            "version": "1.0.10",
-            "provider": "wx76a9a06e5b4e693e"
-        }
     }
 }

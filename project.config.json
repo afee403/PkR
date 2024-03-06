@@ -51,8 +51,8 @@
     "packNpmRelationList": []
   },
   "compileType": "miniprogram",
-  "libVersion": "2.10.4",
-  "appid": "",
+  "libVersion": "3.3.4",
+  "appid": "wxa9d65e48f04ffbd1",
   "projectname": "PopRun",
   "cloudfunctionTemplateRoot": "",
   "simulatorType": "wechat",

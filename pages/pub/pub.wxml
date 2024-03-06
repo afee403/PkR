@@ -13,21 +13,14 @@
     </swiper>
   </view>
 <view class="pub">
-  <van-divider contentPosition="center" customStyle="color: #63b7af;border-color: #63b7af;font-size: 30rpx;">活动广场</van-divider>
+  <van-divider contentPosition="center" customStyle="color: #94070a;border-color: #94070a;font-size: 30rpx;">近期夜奔</van-divider>
   <view class="list">
-    <view>
-      <van-cell title="活动列表" is-link link-type="navigateTo" url="listMore/listmore" value="更多" />
-      <!-- <text catch:tap="listMore">更多></text> -->
-    </view>
     <view class="list-con" wx:for="{{list}}" wx:key="index">
       <w-list-item img-url="{{item.cover.thumbnail}}" text-content="{{item.title}}" img-link="{{item.imgLink}}"/>
     </view>
 
   </view>
-  <van-divider contentPosition="center" customStyle="color: #63b7af;border-color: #63b7af;font-size: 30rpx;">教程分享</van-divider>
-  <view>
-    <van-cell title="教程推荐" is-link link-type="navigateTo" url="blockMore/blockmore" value="更多" />
-  </view>
+  <van-divider contentPosition="center" customStyle="color: #94070a;border-color: #94070a;font-size: 30rpx;">往期精选</van-divider>
   <view class="block">
     <view class="block-con" wx:for="{{block}}" wx:key="index">
       <w-block-item img-url="{{item.img.thumbnail}}" text-content="{{item.title}}" img-link="{{item.imgLink}}"/>

@@ -13,8 +13,8 @@
 // 配置1-适合体验预览项目
 export const hostUrl = 'https://dev.run.nunet.cn';
 export const appInfo = {
-  appid: '', // 自己小程序的appid
-  secret: '', // 自己小程序的secret
+  appid: '	wxa9d65e48f04ffbd1', // 自己小程序的appid
+  secret: 'd332c90c0f834eabe2e32e35de8902ae', // 自己小程序的secret
 };
 
 // 配置2-适合自用、二次开发
