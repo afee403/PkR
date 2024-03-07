@@ -2,6 +2,7 @@
 const app = getApp();
 import Notify from '@vant/weapp/notify/notify';
 import Dialog from '@vant/weapp/dialog/dialog';
+import Toast from '@vant/weapp/toast/toast';
 Page({
 
   /**
@@ -304,15 +305,72 @@ Page({
     let that = this;
     Dialog.confirm({
       title: '提示',
-      zIndex: 200,  //设置的popup弹窗是100
-      message: '清除缓存数据，只会清除您本地的数据，并不会删除您在我们服务器上的数据'
+      zIndex: 200,
+      message: '清除缓存数据，只会清除您本地的数据，并不会删除您在我们服务器上的数据',
+      confirmButtonText: '取消',
+      cancelButtonText: '确认'
     }).then(() => {
       // on confirm
-      wx.clearStorageSync();
-      that.setCacheSize();
     }).catch(() => {
       // on cancel
+      wx.clearStorageSync();
+      that.setCacheSize();
     });
   },
 
+  //检查更新
+  checkUpdate() {
+    Toast.loading({
+        mask: false,
+        duration: 1500,
+        message: '检测中...',
+      });
+    setTimeout(()=>{
+        Toast({
+            duration: 2000,
+            message: '当前已是最新版本'
+        });
+    }, 1800);
+  },
+
+  // 注销账号
+  deleteUser() {
+    let that = this;
+    Dialog.confirm({
+        title: '危险操作',
+        zIndex: 200,
+        message: '该操作不可撤销，一旦确认，将从本系统中删除您的所有数据，请谨慎操作',
+        confirmButtonText: '取消',
+        cancelButtonText: '确认'
+    })
+    .then(() => {
+
+    })
+    .catch(()=>{
+        Dialog.confirm({
+            title: '再次确认',
+            zIndex: 200,
+            message: '确认要注销您的账户，并清除您所有的数据吗？',
+            confirmButtonText: '取消',
+            cancelButtonText: '确认'
+        })
+        .then(() => {
+        
+        })
+        .catch(()=>{
+            wx.request({
+                url: app.config.getHostUrl()+'/api/user/doUnset',
+                data: {
+                    rid: that.data.user.rid
+                },
+                method: 'POST',
+                success: (result)=>{
+                    
+                },
+                fail: ()=>{},
+                complete: ()=>{}
+            });
+        })
+    })
+  }
 })
