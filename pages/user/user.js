@@ -194,11 +194,12 @@ Page({
       this.setData({ user: data });
     }
   },
-
+/*
   // 获取已获勋章
-  getMedals: function(rid){
+  getMedals: function(){
     let that = this;
     let user = that.data.user;
+    let rid = user.rid
     wx.request({
       url: app.config.getHostUrl()+'/api/user/getMedal',
       method: 'post',
@@ -213,8 +214,10 @@ Page({
   },
 
   // 获取勋章称号等数据
-  getUserAll: function (rid) {
+  getUserAll: function () {
     let that = this;
+    let user = that.data.user;
+    let rid = user.rid
     wx.request({
       url: app.config.getHostUrl() + '/api/user/getUserAll',
       method: 'post',
@@ -261,6 +264,50 @@ Page({
     }
     return nmedals;
   },
+*/
+
+//获取个人勋章数据
+requestData(rid) {
+  return new Promise((resolve, reject)=>{
+      wx.request({
+          url: app.config.getHostUrl()+'/api/user/getMedal',
+          data: { rid },
+          method: 'POST',
+          success: (result)=>{
+              if(result.data.isSuccess){
+                  resolve(result.data.data);
+              }else{
+                  reject(result.data.msg);
+              }
+          },
+          fail: ()=>{},
+          complete: ()=>{}
+      });
+  })
+},
+
+// 处理勋章数据
+parseMedals(medals) {
+  if(medals == []) return medals;
+  let nmedals = [];
+  for (let i = 0; i < medals.length; i++) {
+      // if (medals[i] == undefined) continue;
+      let outer = medals[i];
+      let item = [outer]; //内循收集
+      // for (let n = i + 1; n < medals.length; n++) {
+      //     if (outer.type == 0) break;
+      //     if (medals[n] == undefined) continue;
+      //     let inner = medals[n];
+      //     if (outer.meid == inner.meid) {
+      //     item.push(inner);
+      //     delete medals[n];  //用splice不行，因为n的最大值在循环开始就确定了
+      //     }
+      // }
+      nmedals.push(item);
+  }
+  return nmedals;
+},
+
 
   /** 
    * 设置方法

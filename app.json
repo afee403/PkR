@@ -2,9 +2,7 @@
     "pages": [
         "pages/pub/pub",
         "pages/user/user",
-        "pages/user/setting/setting",
         "pages/user/edit/edit",
-        "pages/user/privacy/privacy",
         "pages/pub/listMore/listmore",
         "pages/pub/blockMore/blockmore",
         "pages/pub/listDetail/listDetail",
