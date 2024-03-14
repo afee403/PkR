@@ -3,6 +3,9 @@ const app = getApp();
 import Notify from '@vant/weapp/notify/notify';
 import Dialog from '@vant/weapp/dialog/dialog';
 import Toast from '@vant/weapp/toast/toast';
+import medals_all from '../../utils/medals_all';
+const medals_All = require('../../utils/medals_all');
+
 Page({
 
   /**
@@ -15,10 +18,11 @@ Page({
     unreadMessagesNum: 0, //未读信息
     isUnsigned: true,  //未注册
     medals: [],
+    medals_all: [],
     isShowSettingMenu: false, //设置菜单
     isShowProtocol: false,    //用户协议
     cacheSize: '0kB',         //缓存
-    isShowloading: false,
+    isShowloading: false
   },
 
   /**
@@ -40,11 +44,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    app.updateNotices({read: 0, type: 0}).then(({system})=>{
-        this.setData({
-            unreadMessagesNum: system
-        })
-    })
+    //app.updateNotices()
   },
 
   /**
@@ -61,6 +61,7 @@ Page({
     this.getUserData();
     //初始化：缓存数据
     this.setCacheSize();
+    this.setData({ medals_all: medals_All });
   },
 
   /**
@@ -109,7 +110,12 @@ Page({
               that.setData({isUnsigned: false});
               wx.setStorageSync('user', JSON.stringify(res.data.data));
               // 获取勋章称号
-              that.getUserAll(res.data.data.rid);
+              that.requestData(res.data.data.rid).then((result)=>{
+                  that.setData({
+                      medals: that.parseMedals(result),
+                      isShowloading: false
+                  })
+              })
               // Notify({ type: 'success', message: "刷新成功" });
             } else {
               // 未注册情况
@@ -159,7 +165,6 @@ Page({
               // that.getUserAll(res.data.data.rid);
               that.setData({
                 medals_count: res.data.data.medals.length,
-                honors: res.data.data.honors instanceof Array ? res.data.data.honors[0] : res.data.data.honors,
                 medals: that.parseMedals(res.data.data.medals),
                 isUnsigned: false
               });
@@ -212,6 +217,7 @@ Page({
       }
     })
   },
+*/
 
   // 获取勋章称号等数据
   getUserAll: function () {
@@ -243,6 +249,7 @@ Page({
     })
   },
 
+  /*
   // 处理勋章数据
   parseMedals: function (medals) {
     if(medals == []) return medals;
@@ -304,6 +311,12 @@ parseMedals(medals) {
       //     }
       // }
       nmedals.push(item);
+      // for (i = 0; i < 8; i++) {
+      //   if (this.data.medals_all[i][0].mkey == item[0].mkey) {
+      //     this.data.medals_all[i][0].type = 1;
+      //     this.data.medals_all[i][0].created_at = item[0].created_at;
+      //   }
+      // }
   }
   return nmedals;
 },

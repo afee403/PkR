@@ -1,14 +1,14 @@
-
-
-<view class="count" wx:if="{{ data[0].type == 1 && data.length!=1 }}">
-  <van-tag round type="danger">{{ data.length }}</van-tag>
-</view>
 <view class="img" catch:tap="showDetail">
   <van-image
   width="60"
   height="60"
   fit="contain"
-  src="{{ data[0].img }}"/>
+  src="{{ data[0].img1 }}" wx:if="{{data[0].type}}"/>
+  <van-image
+  width="60"
+  height="60"
+  fit="contain"
+  src="{{ data[0].img2 }}" wx:elif="{{!data[0].type}}"/>
   <view class="name">{{ data[0].name }}</view>
 </view>
 
@@ -20,11 +20,15 @@
         width="120"
         height="120"
         fit="contain"
-        src="{{ data[0].img }}"/>
+        src="{{ data[0].img1 }}" wx:if="{{data[0].type}}"/>
+        <van-image
+        width="120"
+        height="120"
+        fit="contain"
+        src="{{ data[0].img2 }}" wx:if="{{!data[0].type}}"/>
     </view>
     <view class="d-name">{{ data[0].name }}</view>
-    <view class="d-count">{{ data[0].type == 1 ? '累计获得：'+data.length+'枚' : '（不可重复获得）'}}</view>
     <view class="d-desc">{{ data[0].desc }}</view>
-    <view class="d-time">{{ data[data.length-1].created_at }}</view>
+    <view class="d-time" wx:if="{{data[0].type != 0}}">{{ data[0].created_at }}</view>
   </view>
 </van-popup>

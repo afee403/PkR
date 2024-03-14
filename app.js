@@ -6,7 +6,7 @@ App({
   onLaunch: function () {
     let that = this;
     //初始化tabbar状态
-    that.updateNotices({read: 0, type: undefined});
+    //that.updateNotices({read: 0, type: undefined});
   },
   globalData: {
     status: {
@@ -38,6 +38,7 @@ App({
    * index: 第几个tab，0~3
    * value: { dot:boolean, number:number }
    */
+  /*
   setTabbar: function(index, value){
     if(value.number==0 || value.number==null || value.number==undefined){//取消数字，设置红点
       wx.removeTabBarBadge({
@@ -59,6 +60,7 @@ App({
       })
     }
   },
+*/
 
   /**
    * 获取基础配置
@@ -307,140 +309,147 @@ App({
     wx.stopPullDownRefresh();
     // 隐藏顶部刷新图标
     wx.hideNavigationBarLoading();
-  },
+  }
+
 
   /**  
    * 获取通知
    * type: 1点赞，2评论，0系统通知
    * read: 0未读，1已读
+   * getNotices: function(rid, read, type){
+   *   if(!rid) return false;
+   *   let data = { rid };
+   *   if(type==0 || type) data.type = type;
+   *   if(read==0 || read) data.read = read;
+   *   return new Promise((resolve, reject)=>{
+   *     wx.request({
+   *       url: this.config.getHostUrl()+'/api/main/getNotice',
+   *       data: data,
+   *       method: 'POST',
+   *       success: (result)=>{
+   *         if(result.data.isSuccess){
+   *           resolve(result.data.data)
+   *         }else{
+   *           reject(result.data.msg)
+   *         }
+   *       },
+   *       fail: ()=>{},
+   *       complete: ()=>{}
+   *     });
+   *   })
+   * },
    */
-  getNotices: function(rid, read, type){
-    if(!rid) return false;
-    let data = { rid };
-    if(type==0 || type) data.type = type;
-    if(read==0 || read) data.read = read;
-    return new Promise((resolve, reject)=>{
-      wx.request({
-        url: this.config.getHostUrl()+'/api/main/getNotice',
-        data: data,
-        method: 'POST',
-        success: (result)=>{
-          if(result.data.isSuccess){
-            resolve(result.data.data)
-          }else{
-            reject(result.data.msg)
-          }
-        },
-        fail: ()=>{},
-        complete: ()=>{}
-      });
-    })
-  },
   // 更新通知
-  updateNotices: function({read, type}){
-    let that = this;
-    return new Promise((resolved, rejected)=>{
-      let user = wx.getStorageSync('user');
-      if(user){
-        if(user.constructor != Object) user = JSON.parse(user);
-        let setting = wx.getStorageSync('setting');
-        if(!setting){
-          setting = {
-            power: true,
-            voice: true,
-            shake: true,
-            screen: true,
-            method: '1'
-          };
-          wx.setStorageSync('setting', setting);
-        }
-        that.getNotices(user.rid, read, type).then((res)=>{
-          let moment = 0, system = 0;
-          let tabbar = that.globalData.status.tabbar;
-          for(let i=0; i<res.length; i++){
-              if(res[i].type !=0 && res[i].read==0 ) moment++;
-              if(res[i].type ==0 && res[i].read==0 ) system++;
-          }
-          if(setting.method != '2'){  //非免打扰
-            if(setting.method == '1'){  //数字提示
-              tabbar[1] = { dot: false, number: moment}; //动态圈子
-              tabbar[3] = { dot: false, number: system}; //个人中心
-            }else if(setting.method == '0'){ //红点
-              tabbar[1] = { dot: true }; //动态圈子
-              tabbar[3] = { dot: true }; //动态圈子
-            }
-            if(type == 0){
-              that.setTabbar(3, tabbar[3]);  //设置个人中心tabbar数字
-            }else {  //全部设置tabbar数字
-              that.setTabbar(1, tabbar[1]);
-              that.setTabbar(3, tabbar[3]);
-            }
-          }else{ //免打扰
-            that.setTabbar(1, { dot: false });
-            that.setTabbar(3, { dot: false });
-          }
-          // that.globalData.status.tabbar.forEach(function(item,index){
-          //   that.setTabbar(index, item)
-          // })
-          resolved({moment, system});  //返回数据页面内使用
-        })
-      }
-    })
-  },
+  /**
+   * updateNotices: function({read, type}){
+   *   let that = this;
+   *   return new Promise((resolved, rejected)=>{
+   *     let user = wx.getStorageSync('user');
+   *     if(user){
+   *       if(user.constructor != Object) user = JSON.parse(user);
+   *       let setting = wx.getStorageSync('setting');
+   *       if(!setting){
+   *         setting = {
+   *           power: true,
+   *           voice: true,
+   *           shake: true,
+   *           screen: true,
+   *           method: '1'
+   *         };
+   *         wx.setStorageSync('setting', setting);
+   *       }
+   *       that.getNotices(user.rid, read, type).then((res)=>{
+   *         let moment = 0, system = 0;
+   *         let tabbar = that.globalData.status.tabbar;
+   *         for(let i=0; i<res.length; i++){
+   *             if(res[i].type !=0 && res[i].read==0 ) moment++;
+   *             if(res[i].type ==0 && res[i].read==0 ) system++;
+   *         }
+   *         if(setting.method != '2'){  //非免打扰
+   *           if(setting.method == '1'){  //数字提示
+   *             tabbar[1] = { dot: false, number: moment}; //动态圈子
+   *             tabbar[3] = { dot: false, number: system}; //个人中心
+   *           }else if(setting.method == '0'){ //红点
+   *             tabbar[1] = { dot: true }; //动态圈子
+   *             tabbar[3] = { dot: true }; //动态圈子
+   *           }
+   *           if(type == 0){
+   *             that.setTabbar(3, tabbar[3]);  //设置个人中心tabbar数字
+   *           }else {  //全部设置tabbar数字
+   *             that.setTabbar(1, tabbar[1]);
+   *             that.setTabbar(3, tabbar[3]);
+   *           }
+   *         }else{ //免打扰
+   *           that.setTabbar(1, { dot: false });
+   *           that.setTabbar(3, { dot: false });
+   *         }
+   *         // that.globalData.status.tabbar.forEach(function(item,index){
+   *         //   that.setTabbar(index, item)
+   *         // })
+   *         resolved({moment, system});  //返回数据页面内使用
+   *       })
+   *     }
+   *   })
+   * },
+   */
   // 阅读消息
-  doRead(noids) {
-    if(!noids) return;
-    if(!(noids instanceof Array)){
-        noids = [ noids ];
-    }
-    return new Promise((resolve, reject)=>{
-        wx.request({
-            url: this.config.getHostUrl()+'/api/main/readNotice',
-            data: { noids },
-            method: 'POST',
-            success: (result)=>{
-                if(result.data.isSuccess){
-                    resolve(result)
-                }else{
-                    reject(result.data.msg)
-                }
-            },
-            fail: ()=>{},
-            complete: ()=>{}
-        });
-    })
-  },
+  /**
+   * doRead(noids) {
+   *   if(!noids) return;
+   *   if(!(noids instanceof Array)){
+   *       noids = [ noids ];
+   *   }
+   *   return new Promise((resolve, reject)=>{
+   *       wx.request({
+   *           url: this.config.getHostUrl()+'/api/main/readNotice',
+   *           data: { noids },
+   *           method: 'POST',
+   *           success: (result)=>{
+   *               if(result.data.isSuccess){
+   *                   resolve(result)
+   *               }else{
+   *                   reject(result.data.msg)
+   *               }
+   *           },
+   *           fail: ()=>{},
+   *           complete: ()=>{}
+   *       });
+   *   })
+   * },
+   */
   // 删除消息
-  doDelete(noids) {
-    if(!noids) return;
-    if(!(noids instanceof Array)){
-        noids = [ noids ];
-    }
-    return new Promise((resolve, reject)=>{
-        wx.request({
-            url: this.config.getHostUrl()+'/api/main/delNotice',
-            data: { noids },
-            method: 'POST',
-            success: (result)=>{
-                if(result.data.isSuccess){
-                    resolve(result)
-                }else{
-                    reject(result.data.msg)
-                }
-            },
-            fail: ()=>{},
-            complete: ()=>{}
-        });
-    })
-  },
+  /**
+   * doDelete(noids) {
+   *   if(!noids) return;
+   *   if(!(noids instanceof Array)){
+   *       noids = [ noids ];
+   *   }
+   *   return new Promise((resolve, reject)=>{
+   *       wx.request({
+   *           url: this.config.getHostUrl()+'/api/main/delNotice',
+   *           data: { noids },
+   *           method: 'POST',
+   *           success: (result)=>{
+   *               if(result.data.isSuccess){
+   *                   resolve(result)
+   *               }else{
+   *                   reject(result.data.msg)
+   *               }
+   *           },
+   *           fail: ()=>{},
+   *           complete: ()=>{}
+   *       });
+   *   })
+   * },
+   */
 
   /**
    * 查看他人个人中心
+   * goToUserPage: function(rid){
+   *   wx.navigateTo({
+   *     url: '/pages/user/userPage/userPage?rid='+rid
+   *   });
+   * }
    */
-  goToUserPage: function(rid){
-    wx.navigateTo({
-      url: '/pages/user/userPage/userPage?rid='+rid
-    });
-  }
 
 })

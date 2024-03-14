@@ -37,21 +37,36 @@
 
     <van-row custom-class="modal">
         <van-col span="24">
-            <van-cell value="更多" custom-class="head-modal" icon="medal-o" is-link url="modals/modals?rid={{user.rid}}" >
+            <!-- <van-cell value="更多" custom-class="head-modal" icon="medal-o" is-link url="modals/modals?rid={{user.rid}}" >
                 <view slot="title">
                     <view class="van-cell-text">
                         <text class="body-modal-title">勋章墙</text>
                         <van-tag round type="success" wx:if="{{medals_count>0}}">{{medals_count}}</van-tag>
                     </view>
                 </view>
+            </van-cell> -->
+            <van-cell >
+                <view slot="title">
+                    <view class="van-cell-text">
+                        <text class="body-modal-title">勋章墙</text>
+                    </view>
+                </view>
             </van-cell>
-            <view class="modals-body" wx:if="{{!isShowloading &&  medals.length == 0}}">
+            <view class="modals-all" wx:if="{{!isShowloading}}">
+                <van-grid column-num="4" border="{{false}}">
+                    <van-grid-item use-slot wx:for="{{ medals_all }}" wx:for-item="medal_all" wx:key="index">
+                        <w-modals-item medal="{{medal_all}}"></w-modals-item>
+                    </van-grid-item>
+                </van-grid>
+            </view>
+            
+            <!-- <view class="modals-body" wx:if="{{!isShowloading &&  medals.length != 0}}">
                 <van-grid column-num="4" border="{{false}}">
                     <van-grid-item use-slot wx:for="{{ medals }}" wx:for-item="medal" wx:key="index">
                         <w-modals-item medal="{{medal}}"></w-modals-item>
                     </van-grid-item>
                 </van-grid>
-            </view>
+            </view> -->
         </van-col>
     </van-row>
 </view>
