@@ -48,7 +48,7 @@
             <van-cell >
                 <view slot="title">
                     <view class="van-cell-text">
-                        <text class="body-modal-title">勋章墙</text>
+                        <text class="body-modal-title">徽章墙</text>
                     </view>
                 </view>
             </van-cell>

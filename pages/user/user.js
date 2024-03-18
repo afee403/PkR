@@ -58,10 +58,10 @@ Page({
     // 初始化用户数据
     // let user = that.getUserInfoFromLocal();
     //初始化：获取用户数据
+    this.setData({ medals_all: medals_All });
     this.getUserData();
     //初始化：缓存数据
     this.setCacheSize();
-    this.setData({ medals_all: medals_All });
   },
 
   /**
@@ -199,25 +199,7 @@ Page({
       this.setData({ user: data });
     }
   },
-/*
-  // 获取已获勋章
-  getMedals: function(){
-    let that = this;
-    let user = that.data.user;
-    let rid = user.rid
-    wx.request({
-      url: app.config.getHostUrl()+'/api/user/getMedal',
-      method: 'post',
-      data: { rid },
-      success: (res) => {
-        if(res.data.isSuccess){
-          user.medals = res.data.data instanceof Array ? res.data.data : [res.data.data];
-          that.setData({ user });
-        }
-      }
-    })
-  },
-*/
+
 
   // 获取勋章称号等数据
   getUserAll: function () {
@@ -249,29 +231,6 @@ Page({
     })
   },
 
-  /*
-  // 处理勋章数据
-  parseMedals: function (medals) {
-    if(medals == []) return medals;
-    let nmedals = [];
-    for (let i = 0; i < medals.length; i++) {
-      if (medals[i] == undefined) continue;
-      let outer = medals[i];
-      let item = [outer]; //内循收集
-      for (let n = i + 1; n < medals.length; n++) {
-        if (outer.type == 0) break;
-        if (medals[n] == undefined) continue;
-        let inner = medals[n];
-        if (outer.meid == inner.meid) {
-          item.push(inner);
-          delete medals[n];  //用splice不行，因为n的最大值在循环开始就确定了
-        }
-      }
-      nmedals.push(item);
-    }
-    return nmedals;
-  },
-*/
 
 //获取个人勋章数据
 requestData(rid) {
@@ -295,28 +254,22 @@ requestData(rid) {
 
 // 处理勋章数据
 parseMedals(medals) {
+
   if(medals == []) return medals;
   let nmedals = [];
   for (let i = 0; i < medals.length; i++) {
       // if (medals[i] == undefined) continue;
       let outer = medals[i];
-      let item = [outer]; //内循收集
-      // for (let n = i + 1; n < medals.length; n++) {
-      //     if (outer.type == 0) break;
-      //     if (medals[n] == undefined) continue;
-      //     let inner = medals[n];
-      //     if (outer.meid == inner.meid) {
-      //     item.push(inner);
-      //     delete medals[n];  //用splice不行，因为n的最大值在循环开始就确定了
-      //     }
-      // }
+      let item = [outer];
       nmedals.push(item);
-      // for (i = 0; i < 8; i++) {
-      //   if (this.data.medals_all[i][0].mkey == item[0].mkey) {
-      //     this.data.medals_all[i][0].type = 1;
-      //     this.data.medals_all[i][0].created_at = item[0].created_at;
-      //   }
-      // }
+      for (let k = 0; k < this.data.medals_all.length; k++){
+          if (this.data.medals_all[k][0].mkey == item[0].mkey) {
+            this.data.medals_all[k][0].type = 1;
+            this.data.medals_all[k][0].created_at = item[0].created_at;
+            break;
+          }
+      }
+      
   }
   return nmedals;
 },

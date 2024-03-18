@@ -22,7 +22,7 @@
 
   <view class="bottom">
     <view class="reward">
-      <van-cell title="活动奖励" label="挑战活动将将获得一枚勋章哦！" border="{{ false }}" />
+      <van-cell title="夜奔纪念奖励" label="点亮一枚徽章作为回忆的见证" border="{{ false }}" />
       <view class="medal-img">
         <van-image width="150rpx" height="150rpx" src="{{listDetail.medal.img}}" />
       </view>
@@ -31,11 +31,8 @@
       </view>
     </view>
     <view class="act-time">
-      <van-cell title="完成条件：{{listDetail.distance}} km" label="单次跑步里程达到{{listDetail.distance}}km即可挑战成功" border="{{ false }}" />
-      <van-cell title="活动有效期：{{listDetail.period}}" label="已有{{signNum}}人报名，赶紧参加吧" border="{{ false }}" />
-    </view>
-    <view class="apply">
-      <van-button round icon="{{signIcon}}" disabled="{{signDisabled}}" type="{{signType}}" bind:click="signActivity">{{signText}}</van-button>
+      <van-cell title="完成条件：1 km" border="{{ false }}" />
+      <van-cell title="活动有效期：{{listDetail.period}}" border="{{ false }}" />
     </view>
   </view>
 </view>
