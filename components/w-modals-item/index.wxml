@@ -29,6 +29,14 @@
     </view>
     <view class="d-name">{{ data[0].name }}</view>
     <view class="d-desc">{{ data[0].desc }}</view>
-    <view class="d-time" wx:if="{{data[0].type != 0}}">{{ data[0].created_at }}</view>
+    <view class="toget" centor wx:if="{{data[0].type}}">
+      <van-button round type="warning" bind:click="goModal">查看详情</van-button>
+    </view>
+    <view class="toget" centor wx:if="{{!data[0].type}}">
+      <van-button round type="warning" bind:click="goModal">前往点亮</van-button>
+    </view>
+    <div class="d-time" wx:if="{{data[0].type != 0}}">
+      <view>于{{ data[0].created_at }}点亮</view>
+    </div>
   </view>
 </van-popup>

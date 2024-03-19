@@ -1,0 +1,19 @@
+<view class="detail">
+    <view class="d-img">
+      <van-image
+        width="180"
+        height="180"
+        fit="contain"
+        src="{{ medal[0].img1 }}" wx:if="{{medal[0].type}}"/>
+      <van-image
+        width="180"
+        height="180"
+        fit="contain"
+        src="{{ medal[0].img2 }}" wx:if="{{!medal[0].type}}"/>
+    </view>
+    <view class="d-name">{{ medal[0].name }}</view>
+    <view class="d-desc">{{ medal[0].desc }}</view>
+    <view class="toget">
+      <van-button round type="warning" bind:click="getMedal" wx:if="{{!medal[0].type}}">点亮</van-button>
+    </view>
+</view>

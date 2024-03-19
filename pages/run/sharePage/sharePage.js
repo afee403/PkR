@@ -40,22 +40,22 @@ Page({
         this.eventChannel = this.getOpenerEventChannel();
         if(options.isDraw == 1){  //绘图跳转
             //监听从上个页面传来的数据
-            this.eventChannel.on('getDataFromRunPage', function(data) {
-                that.setData({ 
-                    user,
-                    run: data,
-                    isShareInApp: false
-                });
-            })
+            // this.eventChannel.on('getDataFromRunPage', function(data) {
+            //     that.setData({ 
+            //         user,
+            //         run: data,
+            //         isShareInApp: false
+            //     });
+            // })
         }else{   //分享到动态圈子
-            this.eventChannel.on('getImgFromRunPage', function(img) {
-                that.setData({ 
-                    user,
-                    shareImg: img,
-                    ruid: options.ruid,
-                    isShareInApp: true
-                });
-            })
+            // this.eventChannel.on('getImgFromRunPage', function(img) {
+            //     that.setData({ 
+            //         user,
+            //         shareImg: img,
+            //         ruid: options.ruid,
+            //         isShareInApp: true
+            //     });
+            // })
         }
     },
 

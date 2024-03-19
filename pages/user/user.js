@@ -263,13 +263,12 @@ parseMedals(medals) {
       let item = [outer];
       nmedals.push(item);
       for (let k = 0; k < this.data.medals_all.length; k++){
-          if (this.data.medals_all[k][0].mkey == item[0].mkey) {
+          if (this.data.medals_all[k][0].meid == item[0].meid) {
             this.data.medals_all[k][0].type = 1;
             this.data.medals_all[k][0].created_at = item[0].created_at;
             break;
           }
-      }
-      
+      } 
   }
   return nmedals;
 },

@@ -14,6 +14,7 @@ Component({
      * 组件的初始数据
      */
     data: {
+        getable: false,
         isShowDetail: false,
         data: {}  //用于展示
     },
@@ -38,6 +39,14 @@ Component({
         },
         onClose: function(){
             this.setData({ isShowDetail:false })
+        },
+        //跳转到徽章页面
+        goModal: function(){
+          let that = this;
+          let user = that.data.user;
+          wx.navigateTo({
+            url: '/pages/user/medals/medals?medal='+JSON.stringify(that.data.data[0].meid),
+          })
         }
     }
 })

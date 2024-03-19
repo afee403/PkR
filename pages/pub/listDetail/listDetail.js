@@ -10,11 +10,7 @@ Page({
    */
   data: {
     listDetail: {},
-    signNum: 0,
-    signIcon: "plus",
-    signDisabled: false,
     signType: "primary",
-    signText: "报名",
     status: null,  //0活动未开始，1活动已结束，2已报名，3活动已完成
   },
 

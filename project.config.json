@@ -61,21 +61,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "动态",
-          "pathName": "pages/moments/moments",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "新建分享",
-          "pathName": "pages/moments/newMoment/newMoment",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "个人中心",
+          "name": "个人",
           "pathName": "pages/user/user",
-          "query": "个人中心",
+          "query": "个人",
           "scene": null
         },
         {
@@ -85,75 +73,39 @@
           "scene": null
         },
         {
-          "name": "活动广场",
+          "name": "夜奔",
           "pathName": "pages/pub/pub",
-          "query": "",
+          "query": "夜奔",
           "scene": null
         },
         {
-          "name": "跑步教程",
-          "pathName": "pages/pub/blockMore/blockmore",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "隐私设置",
-          "pathName": "pages/user/privacy/privacy",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "用户个人主页",
-          "pathName": "pages/user/userPage/userPage",
-          "query": "rid=10",
-          "scene": null
-        },
-        {
-          "name": "消息盒子",
-          "pathName": "pages/moments/messages/messages",
-          "query": "rid=10&type=moment",
-          "scene": null
-        },
-        {
-          "name": "我的运动",
-          "pathName": "pages/user/myRuns/myRuns",
-          "query": "rid=10",
-          "scene": null
-        },
-        {
-          "name": "详情",
-          "pathName": "pages/pub/listDetail/listDetail",
-          "query": "acid=3",
-          "scene": null
-        },
-        {
-          "name": "位置选择",
-          "pathName": "pages/moments/newMoment/chooseMap/chooseMap",
-          "query": "acid=3",
+          "name": "徽章",
+          "pathName": "pages/user/modals/modals",
+          "query": "徽章",
           "scene": null
         },
         {
           "name": "分享页面",
-          "pathName": "pages/run/share/share",
+          "pathName": "pages/run/sharePage/sharePage",
           "query": "",
           "scene": null
         },
         {
-          "name": "通用设置",
-          "pathName": "pages/user/setting/setting",
+          "name": "跑步",
+          "pathName": "pages/run/run",
           "query": "",
           "scene": null
         },
         {
-          "name": "活动详细",
+          "name": "夜奔详情",
           "pathName": "pages/pub/listDetail/listDetail",
-          "query": "acid=2",
+          "query": "夜奔详情",
           "scene": null
         },
         {
-          "name": "更多活动",
-          "pathName": "pages/pub/listMore/listmore",
-          "query": "",
+          "name": "展示详情",
+          "pathName": "pages/pub/blockDetail/blockDetail",
+          "query": "展示详情",
           "scene": null
         }
       ]

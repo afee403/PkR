@@ -7,7 +7,9 @@
         "pages/pub/blockMore/blockmore",
         "pages/pub/listDetail/listDetail",
         "pages/pub/blockDetail/blockDetail",
-        "pages/user/modals/modals"
+        "pages/user/medals/medals",
+        "pages/run/sharePage/sharePage",
+        "pages/run/run"
     ],
     "permission": {
         "scope.userLocation": {
@@ -22,7 +24,7 @@
     "window": {
         "backgroundTextStyle": "dark",
         "navigationBarBackgroundColor": "#94070A",
-        "navigationBarTitleText": "PkR",
+        "navigationBarTitleText": "PKU夜奔",
         "navigationBarTextStyle": "white",
         "onReachBottomDistance": 65
     },
