@@ -55,7 +55,7 @@
             <view class="modals-all" wx:if="{{!isShowloading}}">
                 <van-grid column-num="4" border="{{false}}">
                     <van-grid-item use-slot wx:for="{{ medals_all }}" wx:for-item="medal_all" wx:key="index">
-                        <w-modals-item medal="{{medal_all}}"></w-modals-item>
+                        <w-modals-item medal="{{medal_all}}" able="{{isUnsigned}}"></w-modals-item>
                     </van-grid-item>
                 </van-grid>
             </view>

@@ -16,9 +16,9 @@ Page({
         height: 250,//裁剪框高度
 
         user: {},
-        schools: [],
         pickerindex: 0,
-
+        pkuid_new: null,
+        pkuid_old: null,
         userOld: "",  //原始数据，用户判断是否更新。对象格式属于引用数据，会同时改变
         imgNew: null, //裁剪好的图，通过和原图是否同地址 判断是否换了头像
         imgOld: null, //原来的头像
@@ -39,6 +39,7 @@ Page({
             that.setData({ 
                 user: data,
                 userOld: JSON.stringify(data), 
+                pkuid_old: data.pkuid,
                 imgOld: data.img
             });
         })
@@ -132,25 +133,67 @@ Page({
 
     //保存修改
     save(){
+        let that = this; 
         let user = this.data.user;
-        if(this.data.imgNew!=null && this.data.imgNew!=this.data.imgOld){ //修改了头像
-            wx.showLoading({
-                title: '上传头像中...'
-            })
-            this.uploadImg(this.data.imgNew)
-                .then((res)=>{
-                    wx.showLoading({
-                        title: '保存中...'
-                    })
-                    user.img = res.url;
-                    this.saveUser(user);
-                })
-                .catch((res)=>{
-                    wx.hideLoading();
-                    console.log('头像上传失败：', res)
-                })
-        }else{
-            this.saveUser(user);
+        if (this.data.pkuid_old != null && user.pkuid!=this.data.pkuid_old) {
+          Notify({ type: 'warning', message: '学号修改失败，请联系管理员' });
+        }
+        else {
+          if(this.data.imgNew!=null && this.data.imgNew!=this.data.imgOld){ //修改了头像
+              wx.showLoading({
+                  title: '上传头像中...'
+              })
+              this.uploadImg(this.data.imgNew)
+                  .then((res)=>{
+                      wx.showLoading({
+                          title: '保存中...'
+                      })
+                      user.img = res.url;
+                      if (user.pkuid!=this.data.pkuid_old) {
+                        wx.showModal({
+                          title: '提示',
+                          content: '学号用于后续活动奖励认证，绑定后不支持自行修改',
+                          success (res) {
+                            if (res.confirm) {
+                              that.saveUser(user);
+                              console.log('用户点击确定')
+                            } else if (res.cancel) {
+                              that.setData({user: JSON.parse(that.data.userOld)});
+                              that.eventChannel.emit('whenUpdated', that.data.user);
+                              console.log('用户点击取消')
+                            }
+                          }
+                        })
+                      }
+                      else {
+                        this.saveUser(user);
+                      } 
+                  })
+                  .catch((res)=>{
+                      wx.hideLoading();
+                      console.log('头像上传失败：', res)
+                  })
+          }else{
+            if (user.pkuid!=this.data.pkuid_old) {
+              wx.showModal({
+                title: '提示',
+                content: '学号用于后续活动奖励认证，绑定后不支持自行修改',
+                success (res) {
+                  if (res.confirm) {
+                    that.saveUser(user);
+                    console.log('用户点击确定')
+                  } else if (res.cancel) {
+                    that.setData({user: JSON.parse(that.data.userOld)});
+                    that.eventChannel.emit('whenUpdated', that.data.user);
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+            else {
+              this.saveUser(user);
+            }  
+          }
         }
     },
     //上传头像
@@ -216,11 +259,23 @@ Page({
         user[e.currentTarget.dataset.who] = e.detail;
         this.setData({ user });
     },
+    onFieldChange_pkuid(e){
+      let user = this.data.user;
+      user[e.currentTarget.dataset.who] = e.detail;
+      this.setData({ user });
+      this.setData({pkuid_new: true});
+  },
     onFieldConfirm(e){
         let user = this.data.user;
         user[e.currentTarget.dataset.who] = e.detail;
         this.setData({ user });
     },
+    onFieldConfirm_pkuid(e){
+      let user = this.data.user;
+      user[e.currentTarget.dataset.who] = e.detail;
+      this.setData({ user });
+      this.setData({pkuid_new: true});
+  },
     // pickerChange(e) {
     //     let user = this.data.user;
     //     user.team = e.detail.value;

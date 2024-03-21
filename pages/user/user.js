@@ -164,7 +164,6 @@ Page({
               // 获取勋章称号
               // that.getUserAll(res.data.data.rid);
               that.setData({
-                medals_count: res.data.data.medals.length,
                 medals: that.parseMedals(res.data.data.medals),
                 isUnsigned: false
               });
@@ -382,6 +381,9 @@ parseMedals(medals) {
                 fail: ()=>{},
                 complete: ()=>{}
             });
+            this.setData({user: {}, medals_all: []});
+            wx.clearStorageSync();
+            that.setCacheSize();
         })
     })
   }

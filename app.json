@@ -17,9 +17,6 @@
         }
     },
     "requiredPrivateInfos": [
-        "getLocation",
-        "onLocationChange",
-        "startLocationUpdate"
     ],
     "window": {
         "backgroundTextStyle": "dark",

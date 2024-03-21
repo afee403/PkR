@@ -12,7 +12,10 @@ Page({
         medal: [],
         medals_all: [],
         user: {},
-        medal_data: ""
+        medal_data: "",
+        time_at_now: null,
+        time_start: null,
+        time_end: null
     },
 
     /**
@@ -37,6 +40,10 @@ Page({
             break;
           }
         }
+        this.setData({
+          time_start: this.formatDate(this.data.medal[0].getable),
+          time_end: this.formatDate(this.data.medal[0].ungetable)
+        })
     },
 
     /**
@@ -95,29 +102,103 @@ Page({
 
     // 获取徽章
     getMedal() {
-      return new Promise((resolve, reject)=>{
-        wx.request({
-            url: app.config.getHostUrl()+'/api/user/lightMedal',
-            data: { 
-              "rid": this.data.user.rid,
-              "meid": this.data.medal[0].meid
-            },
-            method: 'POST',
-            success: (result)=>{
-                if(result.data.isSuccess){
-                    resolve(result.data.data);
-                    this.data.medal[0].type = 1;
-                }else{
-                    reject(result.data.msg);
+      let that = this;
+      let user = that.data.user;
+      if(this.data.user.pkuid != null) {
+        this.setData({time_at_now: Date.parse(new Date())});
+        if (this.data.time_at_now > that.data.medal[0].getable && time_at_now < that.data.medal[0].ungetable) {
+          return new Promise((resolve, reject)=>{
+            wx.request({
+                url: app.config.getHostUrl()+'/api/user/lightMedal',
+                data: { 
+                  "rid": this.data.user.rid,
+                  "meid": this.data.medal[0].meid
+                },
+                method: 'POST',
+                success: (result)=>{
+                    if(result.data.isSuccess){
+                        resolve(result.data.data);
+                        this.data.medal[0].type = 1;
+                    }else{
+                        reject(result.data.msg);
+                    }
+                },
+                fail: ()=>{},
+                complete: ()=>{
+                  wx.redirectTo({
+                    url: '/pages/user/medals/medals?medal='+this.data.medal_data,
+                  })
                 }
-            },
-            fail: ()=>{},
-            complete: ()=>{
-              wx.redirectTo({
-                url: '/pages/user/medals/medals?medal='+this.data.medal_data,
-              })
+            });
+          })
+        }
+        else {
+          wx.showModal({
+            title: '提示',
+            content: '未在可点亮时间',
+            success (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
             }
-        });
-      })
+          })
+        }
+      }
+      else {
+        wx.showModal({
+          title: '提示',
+          content: '对不起，请先绑定您的学号',
+          success (res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '../edit/edit',
+                events: {
+                  // 获取被打开页面传送到当前页面的数据
+                  whenUpdated: function(data) {
+                    // console.log('修改成功返回的数据',data)
+                    that.setData({ user: data })
+                    wx.setStorageSync('user', data);
+                  },
+                },
+                success: (res)=>{
+                  res.eventChannel.emit('getDataFromUserPage', user)
+                },
+                fail: ()=>{},
+                complete: ()=>{}
+              });
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
     },
+    //时间戳转换方法    date:时间戳数字
+    formatDate(date) {
+      var date = new Date(date);
+      var YY = date.getFullYear() + '-';
+      var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+      var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+      var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+      var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+      return YY + MM + DD +" "+hh + mm + ss;
+    },
+    // 生成分享海报
+    shareMedal() {
+      wx.showModal({
+        title: '提示',
+        content: '未开发完成',
+        success (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
 })

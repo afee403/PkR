@@ -32,29 +32,14 @@
                     bind:confirm="onFieldConfirm"
                     error="{{ false }}"
                 />
-                <van-cell title="性别" title-class="van-cell-title">
-                    <van-radio-group value="{{ user.sex }}" bind:change="onChange">
-                        <van-row>
-                            <van-col span="8">
-                                <van-radio name="0">保密</van-radio>
-                            </van-col>
-                            <van-col span="8">
-                                <van-radio name="1">男生</van-radio>
-                            </van-col>
-                            <van-col span="8">
-                                <van-radio name="2">女生</van-radio>
-                            </van-col>
-                        </van-row>
-                    </van-radio-group>
-                </van-cell>
                 <van-field
-                    value="{{ user.job }}"
+                    value="{{ user.pkuid }}"
                     label="学号"
                     placeholder="绑定你的学号"
                     type="text"
-                    data-who="job"
-                    bind:change="onFieldChange"
-                    bind:confirm="onFieldConfirm"
+                    data-who="pkuid"
+                    bind:change="onFieldChange_pkuid"
+                    bind:confirm="onFieldConfirm_pkuid"
                     border="{{ false }}"
                     error="{{ false }}"
                 />

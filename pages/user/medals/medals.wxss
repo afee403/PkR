@@ -47,6 +47,15 @@
   text-align: center;
 }
 
+.d-time{
+  margin: 0 auto;
+  width: 100%;
+  bottom: 50rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #afabab;
+}
+
 .toget{
 margin: 30rpx auto;
 text-align: center;

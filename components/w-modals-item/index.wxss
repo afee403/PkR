@@ -45,7 +45,7 @@
     border: rgb(233, 231, 229) 1px solid;
     padding: 12rpx 30rpx;
     border-radius: 5px;
-    min-height: 150rpx;
+    min-height: 100rpx;
     font-size: 30rpx;
     color: #504e4e;
     text-align: center;

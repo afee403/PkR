@@ -32,7 +32,7 @@
     </view>
     <view class="act-time">
       <van-cell title="完成条件：1 km" border="{{ false }}" />
-      <van-cell title="活动有效期：{{listDetail.period}}" border="{{ false }}" />
+      <van-cell title="活动有效期：{{activity_date+'21:00:00-22:00:00'}}" border="{{ false }}" />
     </view>
   </view>
 </view>
