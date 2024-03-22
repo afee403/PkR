@@ -283,7 +283,6 @@ Page({
     // },
     onConfirm(e) {
         let user = this.data.user;
-        user.team = e.detail.value;
         this.setData({ user, isShowPicker: false });
     },
     onCancel() {

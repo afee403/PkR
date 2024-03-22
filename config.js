@@ -13,4 +13,4 @@
 
 
 // 配置2-适合自用、二次开发
-export const hostUrl = 'http://162.105.209.3:8000';
+export const hostUrl = 'https://kwdl.pku.edu.cn';

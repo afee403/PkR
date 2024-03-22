@@ -164,7 +164,6 @@ Page({
               // 获取勋章称号
               // that.getUserAll(res.data.data.rid);
               that.setData({
-                medals: that.parseMedals(res.data.data.medals),
                 isUnsigned: false
               });
               let user = {...res.data.data};
@@ -254,22 +253,26 @@ requestData(rid) {
 // 处理勋章数据
 parseMedals(medals) {
 
-  if(medals == []) return medals;
-  let nmedals = [];
-  for (let i = 0; i < medals.length; i++) {
-      // if (medals[i] == undefined) continue;
-      let outer = medals[i];
-      let item = [outer];
-      nmedals.push(item);
-      for (let k = 0; k < this.data.medals_all.length; k++){
-          if (this.data.medals_all[k][0].meid == item[0].meid) {
-            this.data.medals_all[k][0].type = 1;
-            this.data.medals_all[k][0].created_at = item[0].created_at;
-            break;
-          }
-      } 
+  if(medals == [] || medals.length == undefined) {
+    return medals;
   }
-  return nmedals;
+  else {
+    let nmedals = [];
+    for (let i = 0; i < medals.length; i++) {
+        // if (medals[i] == undefined) continue;
+        let outer = medals[i];
+        let item = [outer];
+        nmedals.push(item);
+        for (let k = 0; k < this.data.medals_all.length; k++){
+            if (this.data.medals_all[k][0].meid == item[0].meid) {
+              this.data.medals_all[k][0].type = 1;
+              this.data.medals_all[k][0].created_at = item[0].created_at;
+              break;
+            }
+        } 
+    }
+    return nmedals;
+  }
 },
 
 
@@ -381,7 +384,7 @@ parseMedals(medals) {
                 fail: ()=>{},
                 complete: ()=>{}
             });
-            this.setData({user: {}, medals_all: []});
+            this.setData({user: {img: "/imgs/default/girl.jpg"}, medals_all: medals_All});
             wx.clearStorageSync();
             that.setCacheSize();
         })

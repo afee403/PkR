@@ -15,7 +15,11 @@ Page({
         medal_data: "",
         time_at_now: null,
         time_start: null,
-        time_end: null
+        time_end: null,
+        is_time: false,
+        is_place: false,
+        xx: null,
+        yy: null
     },
 
     /**
@@ -106,7 +110,37 @@ Page({
       let user = that.data.user;
       if(this.data.user.pkuid != null) {
         this.setData({time_at_now: Date.parse(new Date())});
-        if (this.data.time_at_now > that.data.medal[0].getable && time_at_now < that.data.medal[0].ungetable) {
+        if (this.data.time_at_now > that.data.medal[0].getable && this.data.time_at_now < that.data.medal[0].ungetable) {
+          this.setData({is_time: true});
+        }
+        wx.getLocation({
+          type: "wgs84",
+          isHighAccuracy: true,
+          success (res) {
+            const latitude = res.latitude
+            const longitude = res.longitude
+            that.setData({xx: longitude, yy: latitude})
+            if (that.data.xx >= 116.312396 && that.data.xx <= 116.314480) {
+              if (that.data.yy >= 39.986777 && that.data.yy <= 39.988392) {
+                that.setData({is_place: true})
+              }
+            }
+          },
+          fail (res) {
+            wx.showModal({
+              title: '提示',
+              content: '未获得位置信息',
+              success (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
+        })
+        if (this.data.is_time && this.data.is_place) {
           return new Promise((resolve, reject)=>{
             wx.request({
                 url: app.config.getHostUrl()+'/api/user/lightMedal',
@@ -135,7 +169,7 @@ Page({
         else {
           wx.showModal({
             title: '提示',
-            content: '未在可点亮时间',
+            content: '未在可点亮时间或指定地点',
             success (res) {
               if (res.confirm) {
                 console.log('用户点击确定')
